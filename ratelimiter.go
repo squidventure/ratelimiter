@@ -11,21 +11,16 @@ import (
 var (
 	TheRateLimiter RateLimiter = &BasicRateLimiter{}
 
-	MaxConnections                                       int64 = 100
-	prefixesBypassRateLimiter, suffixesBypassRateLimiter set.Set[string]
+	MaxConnections            int64 = 100
+	prefixesBypassRateLimiter       = set.NewSet[string](true)
+	suffixesBypassRateLimiter       = set.NewSet[string](true)
 )
 
 func RegisterBypassPrefix(prefix string) {
-	if prefixesBypassRateLimiter == nil {
-		prefixesBypassRateLimiter = set.NewSet[string](true)
-	}
 	prefixesBypassRateLimiter.Add(prefix)
 }
 
 func RegisterBypassSuffix(suffix string) {
-	if suffixesBypassRateLimiter == nil {
-		suffixesBypassRateLimiter = set.NewSet[string](true)
-	}
 	suffixesBypassRateLimiter.Add(suffix)
 }
 
